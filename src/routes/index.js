@@ -1,0 +1,9 @@
+export { default as Main } from './Main';
+export { default as Login } from './Login';
+export { default as Registration } from './Registration';
+export { default as Room } from './Room';
+export { default as Terms } from './Terms';
+export { default as LoginVk } from './LoginVk';
+export { default as LoginOk } from './LoginOk';
+export { default as Profile } from './Profile';
+export { default as VideoChat } from './VideoChat';

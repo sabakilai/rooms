@@ -1,0 +1,23 @@
+.msgContainer { 
+    margin: 10px 20px;
+    width: 90%;
+}
+.msgContainer::after {
+    content: "";
+    clear: both;
+    display: table;
+}
+
+.msgContainer img {
+    float: left;
+    max-width: 60px;
+    width: 100%;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+.container img.right {
+    float: right;
+    margin-left: 20px;
+    margin-right:0;
+}

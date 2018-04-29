@@ -1,0 +1,72 @@
+{
+  "rules": {
+    "player": {
+      "$roomId": {
+        ".read": "root.child('members').child($roomId).child(auth.uid).exists()",
+        ".write": "root.child('rooms').child($roomId).child('creator').val() == auth.uid"
+      }
+    },
+    "members": {
+      "$roomId": {
+        ".read": "data.child(auth.uid).exists()",
+        ".write": "root.child('rooms').child($roomId).child('creator').val() == auth.uid",
+        "$uid": {
+          ".read": "auth.uid == $uid"
+        }
+      }
+    },
+    "messages": {
+      "$roomId": {
+        ".read": "root.child('members').child($roomId).child(auth.uid).exists()",
+        ".write": "root.child('members').child($roomId).child(auth.uid).exists()"
+      }
+    },
+    "passwords": {
+      "$roomId": {
+        ".read": "root.child('rooms').child($roomId).child('creator').val() == auth.uid",
+        ".write": "root.child('rooms').child($roomId).child('creator').val() == auth.uid"
+      }
+    },
+    "requests": {
+      "$userId": {
+        ".read": "auth.uid == $userId",
+        ".write": "auth.uid == $userId",
+        ".validate": "newData.hasChildren(['password', 'room']) && root.child('rooms').child(newData.child('room').val()).exists()"
+      }
+    },
+    "rooms": {
+      ".read": true,
+      "$roomId": {
+        ".write": "auth.uid == data.child('creator').val() || (!data.exists() && auth.uid == newData.child('creator').val())",
+        "creator": {
+          ".validate": "newData.isString() && newData.val().length > 0 && root.child('profiles').child(auth.uid).exists()"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0",
+          ".write": "auth.uid == data.parent().child('creator').val()"
+        },
+        "is_private": {
+          ".validate": "newData.isBoolean()"
+        }
+      }
+    },
+    "profiles": {
+      ".read": true,
+      "$uid": {
+        ".write": "auth.uid == $uid"
+      }
+    },
+    "online": {
+      ".read": true,
+      "$roomId":{
+        "$uid": {
+        	".write": "auth.uid == $uid"
+      	}
+      }
+    },
+    "videoChats": {
+      ".read": true,
+      ".write": true
+    }
+  }
+}
